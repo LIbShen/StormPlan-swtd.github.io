@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>吟诗舞韵 - 小学生诗歌与舞蹈教育平台</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Noto Sans SC (正文) & Ma Shan Zheng (书法标题) -->
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Noto Sans SC"', 'sans-serif'],
+                        serif: ['"Ma Shan Zheng"', 'cursive'],
+                    },
+                    colors: {
+                        'ink-900': '#1a1a1a',
+                        'paper-50': '#fdfbf7',
+                        'paper-100': '#f7f3e8',
+                        'china-red': '#c0392b',
+                        'jade-green': '#27ae60',
+                        'indigo-ink': '#2c3e50'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .scroll-hidden::-webkit-scrollbar {
+            display: none;
+        }
+        .scroll-hidden {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .ink-bg {
+            background-image: url('https://images.unsplash.com/photo-1516962215378-7fa2e137ae91?q=80&w=2574&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
+        }
+    </style>
+</head>
+<body class="bg-paper-50 text-ink-900 font-sans antialiased">
+
+    <!-- 导航栏 -->
+    <nav class="fixed w-full z-50 bg-paper-50/90 backdrop-blur-md border-b border-stone-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <div class="bg-china-red text-white p-1 rounded-md">
+                        <i data-lucide="feather" class="w-6 h-6"></i>
+                    </div>
+                    <span class="font-serif text-2xl text-china-red tracking-wider">吟诗舞韵</span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#webapp" class="text-gray-600 hover:text-china-red transition">网页应用</a>
+                    <a href="#features" class="text-gray-600 hover:text-china-red transition">特色功能</a>
+                    <a href="#curriculum" class="text-gray-600 hover:text-china-red transition">课程体系</a>
+                    <a href="#teachers" class="text-gray-600 hover:text-china-red transition">教师专区</a>
+                    <button class="bg-indigo-ink text-white px-5 py-2 rounded-full hover:bg-black transition flex items-center gap-2 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5" onclick="scrollToBottom()">
+                        <i data-lucide="smartphone" class="w-4 h-4"></i>
+                        <span>扫码入口</span>
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-china-red focus:outline-none">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu Panel -->
+        <div id="mobile-menu" class="hidden md:hidden bg-paper-100 border-t border-stone-200">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#webapp" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-china-red hover:bg-white rounded-md">网页应用</a>
+                <a href="#features" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-china-red hover:bg-white rounded-md">特色功能</a>
+                <a href="#curriculum" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-china-red hover:bg-white rounded-md">课程体系</a>
+                <a href="#teachers" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-china-red hover:bg-white rounded-md">教师专区</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden">
+        <div class="absolute inset-0 z-0 opacity-10 pointer-events-none">
+            <!-- Decorative Background Pattern simulates traditional paper texture/ink -->
+             <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                <filter id="noise">
+                    <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+                </filter>
+                <rect width="100%" height="100%" filter="url(#noise)" opacity="0.5"/>
+            </svg>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <h1 class="text-5xl md:text-7xl font-serif text-indigo-ink mb-6 leading-tight">
+                诗韵童心 <span class="text-china-red">舞动经典</span>
+            </h1>
+            <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-600 leading-relaxed">
+                专为小学生设计的诗歌与舞蹈教育平台。让古诗不再是枯燥的文字，而是指尖的韵律、脚下的步伐。以舞演诗，寓教于乐。
+            </p>
+            <div class="mt-10 flex justify-center gap-4">
+                <a href="https://libshen.github.io/StormPlan-yswy.github.io/" target="_blank" rel="noreferrer" class="px-8 py-4 bg-china-red text-white text-lg font-medium rounded-full shadow-lg hover:bg-red-700 transition flex items-center gap-2">
+                    进入网页应用
+                    <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                </a>
+                <button onclick="scrollToBottom()" class="px-8 py-4 bg-white text-indigo-ink border border-gray-300 text-lg font-medium rounded-full hover:bg-gray-50 transition flex items-center gap-2">
+                    扫码关注与入口
+                    <i data-lucide="qr-code" class="w-5 h-5"></i>
+                </button>
+            </div>
+            
+            <!-- Hero Image removed -->
+        </div>
+    </section>
+
+    <section id="webapp" class="py-20 bg-paper-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                <div>
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white text-indigo-ink text-sm border border-stone-200 shadow-sm">
+                        <i data-lucide="globe" class="w-4 h-4 text-china-red"></i>
+                        <span>已上线 · 网页应用</span>
+                    </div>
+                    <h2 class="mt-5 text-3xl md:text-5xl font-serif text-indigo-ink leading-tight">
+                        输入学习号就能进入<br>也支持游客体验
+                    </h2>
+                    <p class="mt-4 text-gray-600 text-lg leading-relaxed">
+                        你已经创建了可用的网页端入口：学习号模式会把学习记录保存在本机浏览器里；游客模式不保存记录，适合快速试看。
+                    </p>
+
+                    <div class="mt-8 flex flex-wrap gap-3">
+                        <a href="https://libshen.github.io/StormPlan-yswy.github.io/" target="_blank" rel="noreferrer" class="px-6 py-3 bg-indigo-ink text-white rounded-full hover:bg-black transition flex items-center gap-2 shadow-md">
+                            <i data-lucide="play" class="w-4 h-4"></i>
+                            <span>打开网页应用</span>
+                        </a>
+                        <button onclick="copyWebAppLink()" class="px-6 py-3 bg-white text-indigo-ink border border-stone-200 rounded-full hover:bg-gray-50 transition flex items-center gap-2 shadow-sm">
+                            <i data-lucide="copy" class="w-4 h-4"></i>
+                            <span>复制链接</span>
+                        </button>
+                        <button onclick="scrollToBottom()" class="px-6 py-3 bg-white text-china-red border border-red-100 rounded-full hover:bg-red-50 transition flex items-center gap-2 shadow-sm">
+                            <i data-lucide="qr-code" class="w-4 h-4"></i>
+                            <span>用手机扫码</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-3xl border border-stone-200 shadow-xl overflow-hidden">
+                    <div class="p-6 border-b border-stone-200 bg-paper-50 flex items-center justify-between gap-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-china-red text-white flex items-center justify-center">
+                                <i data-lucide="sparkles" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <p class="font-bold text-gray-900">体验亮点</p>
+                                <p class="text-sm text-gray-500">更贴近课堂与家校场景</p>
+                            </div>
+                        </div>
+                        <a href="https://libshen.github.io/StormPlan-yswy.github.io/" target="_blank" rel="noreferrer" class="text-sm text-china-red hover:text-red-700 font-medium flex items-center gap-1">
+                            立即进入
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                    <div class="p-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="rounded-2xl bg-paper-50 border border-stone-100 p-5">
+                            <div class="flex items-center gap-2 text-indigo-ink font-bold">
+                                <i data-lucide="id-card" class="w-5 h-5 text-indigo-ink"></i>
+                                <span>学习号 / 游客</span>
+                            </div>
+                            <p class="mt-2 text-sm text-gray-600 leading-relaxed">
+                                首次输入学习号会自动创建；学习号唯一，昵称用于区分同学。
+                            </p>
+                        </div>
+                        <div class="rounded-2xl bg-paper-50 border border-stone-100 p-5">
+                            <div class="flex items-center gap-2 text-indigo-ink font-bold">
+                                <i data-lucide="flame" class="w-5 h-5 text-china-red"></i>
+                                <span>今日挑战</span>
+                            </div>
+                            <p class="mt-2 text-sm text-gray-600 leading-relaxed">
+                                每天学习一首唐诗，把“背诵”变成“演绎”。
+                            </p>
+                        </div>
+                        <div class="rounded-2xl bg-paper-50 border border-stone-100 p-5">
+                            <div class="flex items-center gap-2 text-indigo-ink font-bold">
+                                <i data-lucide="star" class="w-5 h-5 text-amber-600"></i>
+                                <span>打卡与星星</span>
+                            </div>
+                            <p class="mt-2 text-sm text-gray-600 leading-relaxed">
+                                学习记录与徽章激励，帮助孩子看见自己的进步。
+                            </p>
+                        </div>
+                        <div class="rounded-2xl bg-paper-50 border border-stone-100 p-5">
+                            <div class="flex items-center gap-2 text-indigo-ink font-bold">
+                                <i data-lucide="bot" class="w-5 h-5 text-jade-green"></i>
+                                <span>小诗 AI</span>
+                            </div>
+                            <p class="mt-2 text-sm text-gray-600 leading-relaxed">
+                                有问题随时问：诗意、背景、朗诵与动作提示，一步到位。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-serif text-indigo-ink mb-4">平台核心特色</h2>
+                <div class="w-24 h-1 bg-china-red mx-auto rounded-full"></div>
+                <p class="mt-4 text-gray-500">将传统文化与现代美育完美融合</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <!-- Feature 1 -->
+                <div class="p-8 rounded-2xl bg-paper-50 border border-stone-100 hover:shadow-xl transition duration-300 group">
+                    <div class="w-14 h-14 bg-indigo-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-indigo-600 transition duration-300">
+                        <i data-lucide="book-open" class="w-7 h-7 text-indigo-600 group-hover:text-white transition"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">统编教材同步</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        严格贴合教育部统编版小学语文教材，覆盖1-6年级所有必背古诗词。课内学习，课外拓展，无缝衔接。
+                    </p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="p-8 rounded-2xl bg-paper-50 border border-stone-100 hover:shadow-xl transition duration-300 group">
+                    <div class="w-14 h-14 bg-rose-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-china-red transition duration-300">
+                        <i data-lucide="music" class="w-7 h-7 text-china-red group-hover:text-white transition"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">诗舞融合演绎</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        每一首古诗都配有专业的儿童舞蹈视频。通过肢体动作记忆诗词意象，动静结合，极大提高记忆效率与审美能力。
+                    </p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="p-8 rounded-2xl bg-paper-50 border border-stone-100 hover:shadow-xl transition duration-300 group">
+                    <div class="w-14 h-14 bg-amber-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-amber-500 transition duration-300">
+                        <i data-lucide="lightbulb" class="w-7 h-7 text-amber-600 group-hover:text-white transition"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">教学灵感库</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        为老师提供丰富的教学设计思路。如何用舞蹈导入古诗？如何组织课堂表演？这里有完整的教案参考。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Curriculum/Demo Section -->
+    <section id="curriculum" class="py-20 bg-paper-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-serif text-indigo-ink">分级课程预览</h2>
+                    <p class="mt-2 text-gray-600">根据学生年龄特点，循序渐进</p>
+                </div>
+                <!-- Tabs Navigation -->
+                <div class="mt-6 md:mt-0 overflow-x-auto scroll-hidden">
+                    <div class="flex space-x-2">
+                        <button onclick="switchTab('g1')" id="btn-g1" class="tab-btn px-4 py-2 rounded-full text-sm font-medium bg-china-red text-white shadow-md transition">一年级</button>
+                        <button onclick="switchTab('g2')" id="btn-g2" class="tab-btn px-4 py-2 rounded-full text-sm font-medium bg-white text-gray-600 hover:bg-gray-100 transition">二年级</button>
+                        <button onclick="switchTab('g3')" id="btn-g3" class="tab-btn px-4 py-2 rounded-full text-sm font-medium bg-white text-gray-600 hover:bg-gray-100 transition">三年级</button>
+                        <button onclick="switchTab('g4')" id="btn-g4" class="tab-btn px-4 py-2 rounded-full text-sm font-medium bg-white text-gray-600 hover:bg-gray-100 transition">四年级</button>
+                        <button onclick="switchTab('g5')" id="btn-g5" class="tab-btn px-4 py-2 rounded-full text-sm font-medium bg-white text-gray-600 hover:bg-gray-100 transition">五年级</button>
+                        <button onclick="switchTab('g6')" id="btn-g6" class="tab-btn px-4 py-2 rounded-full text-sm font-medium bg-white text-gray-600 hover:bg-gray-100 transition">六年级</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Content Area -->
+            <div class="bg-white rounded-3xl p-8 shadow-lg min-h-[400px] flex flex-col md:flex-row gap-8 items-center" id="tab-content">
+                <!-- Content injected by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- For Teachers Section -->
+    <section id="teachers" class="py-20 bg-indigo-ink text-white relative overflow-hidden">
+        <!-- Decorative bg -->
+        <div class="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div>
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-indigo-200 text-sm mb-6 border border-white/20">
+                        <i data-lucide="graduation-cap" class="w-4 h-4"></i>
+                        <span>教师专属赋能</span>
+                    </div>
+                    <h2 class="text-3xl md:text-5xl font-serif mb-6 leading-tight">不仅是学生的学伴<br>更是老师的教具</h2>
+                    <p class="text-indigo-200 text-lg mb-8 leading-relaxed">
+                        “吟诗舞韵”致力于解决古诗教学中“死记硬背”的痛点。我们提供标准化的舞蹈动作分解、配乐朗诵音频以及完整的教学活动设计案例，帮助老师打造生动有趣的语文课堂。
+                    </p>
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="check-circle-2" class="w-6 h-6 text-jade-green flex-shrink-0 mt-0.5"></i>
+                            <span class="text-gray-300">获取高质量的课堂导入视频素材</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="check-circle-2" class="w-6 h-6 text-jade-green flex-shrink-0 mt-0.5"></i>
+                            <span class="text-gray-300">借鉴名师“诗歌+表演”跨学科教学设计</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="check-circle-2" class="w-6 h-6 text-jade-green flex-shrink-0 mt-0.5"></i>
+                            <span class="text-gray-300">适合社团活动、六一汇演的排练参考</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="relative">
+                    <div class="absolute inset-0 bg-china-red rounded-2xl transform rotate-3 opacity-20"></div>
+                    <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?q=80&w=1974&auto=format&fit=crop" alt="教师教学场景" class="relative rounded-2xl shadow-2xl border-4 border-white/10 w-full h-[400px] object-cover">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA / QR Code Section -->
+    <section id="download" class="py-24 bg-white text-center">
+        <div class="max-w-4xl mx-auto px-4">
+            <h2 class="text-4xl font-serif text-indigo-ink mb-6">开启诗情画意的学习之旅</h2>
+            <p class="text-xl text-gray-600 mb-12">网页应用已可体验，小程序正在开发；公众号可获取最新进展</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="rounded-3xl border border-stone-200 bg-paper-50 p-8 shadow-lg hover:shadow-xl transition">
+                    <div class="mx-auto w-52 h-52 bg-white border border-stone-200 rounded-2xl p-4 shadow-sm">
+                        <img class="w-full h-full object-contain" alt="吟诗舞韵网页应用二维码" src="https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=https%3A%2F%2Flibshen.github.io%2FStormPlan-yswy.github.io%2F">
+                    </div>
+                    <h3 class="mt-5 font-bold text-lg text-gray-900">网页应用入口</h3>
+                    <p class="mt-1 text-sm text-gray-500">手机扫码打开，或复制链接分享</p>
+                    <div class="mt-5 flex flex-col gap-2">
+                        <a href="https://libshen.github.io/StormPlan-yswy.github.io/" target="_blank" rel="noreferrer" class="w-full px-4 py-2.5 bg-indigo-ink text-white rounded-full hover:bg-black transition flex items-center justify-center gap-2">
+                            <i data-lucide="external-link" class="w-4 h-4"></i>
+                            <span>打开网页应用</span>
+                        </a>
+                        <button onclick="copyWebAppLink()" class="w-full px-4 py-2.5 bg-white text-indigo-ink border border-stone-200 rounded-full hover:bg-gray-50 transition flex items-center justify-center gap-2">
+                            <i data-lucide="copy" class="w-4 h-4"></i>
+                            <span>复制链接</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="rounded-3xl border border-stone-200 bg-paper-50 p-8 shadow-lg hover:shadow-xl transition">
+                    <div class="mx-auto w-52 h-52 bg-white border border-stone-200 rounded-2xl p-4 shadow-sm">
+                        <img class="w-full h-full object-contain" alt="吟诗舞韵公众号二维码" src="./公众号.png">
+                    </div>
+                    <h3 class="mt-5 font-bold text-lg text-gray-900">公众号入口</h3>
+                    <p class="mt-1 text-sm text-gray-500">关注获取课程更新与活动通知</p>
+                    <div class="mt-5">
+                        <button onclick="showToast('已展示公众号二维码，可直接用微信扫一扫')" class="w-full px-4 py-2.5 bg-white text-jade-green border border-emerald-100 rounded-full hover:bg-emerald-50 transition flex items-center justify-center gap-2">
+                            <i data-lucide="wechat" class="w-4 h-4"></i>
+                            <span>微信扫码关注</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="rounded-3xl border border-stone-200 bg-paper-50 p-8 shadow-lg hover:shadow-xl transition">
+                    <div class="mx-auto w-52 h-52 bg-white border border-stone-200 rounded-2xl p-4 shadow-sm flex flex-col items-center justify-center gap-3">
+                        <div class="w-14 h-14 rounded-2xl bg-china-red text-white flex items-center justify-center shadow-sm">
+                            <i data-lucide="smartphone" class="w-7 h-7"></i>
+                        </div>
+                        <div class="text-sm text-gray-500">小程序入口二维码</div>
+                        <div class="px-3 py-1 rounded-full bg-amber-100 text-amber-700 text-xs font-bold border border-amber-200">开发中</div>
+                    </div>
+                    <h3 class="mt-5 font-bold text-lg text-gray-900">小程序入口</h3>
+                    <p class="mt-1 text-sm text-gray-500">上线后将同步到这里</p>
+                    <div class="mt-5">
+                        <button onclick="showToast('小程序正在开发中：现在可先使用网页应用体验')" class="w-full px-4 py-2.5 bg-white text-china-red border border-red-100 rounded-full hover:bg-red-50 transition flex items-center justify-center gap-2">
+                            <i data-lucide="bell" class="w-4 h-4"></i>
+                            <span>提醒我关注进展</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-paper-100 border-t border-stone-200 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="bg-china-red text-white p-1 rounded-md">
+                            <i data-lucide="feather" class="w-5 h-5"></i>
+                        </div>
+                        <span class="font-serif text-xl text-china-red">吟诗舞韵</span>
+                    </div>
+                    <p class="text-gray-500 text-sm leading-relaxed max-w-xs">
+                        致力于弘扬中华优秀传统文化，通过“诗舞结合”的创新形式，让每一个中国孩子都能在舞动中感受诗词之美。
+                    </p>
+                </div>
+                <!-- Quick Links removed as requested -->
+                <div>
+                    <h4 class="font-bold text-gray-900 mb-4">联系方式</h4>
+                    <ul class="space-y-2 text-sm text-gray-600">
+                        <li class="flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4"></i> contact@yinshiwuyun.com</li>
+                        <li class="flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4"></i> 400-123-4567</li>
+                        <li class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4"></i> 中国·湖南</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-xs text-gray-500">© 2025 吟诗舞韵 版权所有</p>
+                <div class="flex space-x-4 mt-4 md:mt-0">
+                    <a href="#" class="text-gray-400 hover:text-china-red"><i data-lucide="wechat" class="w-5 h-5"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-china-red"><i data-lucide="youtube" class="w-5 h-5"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 opacity-0 translate-y-3 pointer-events-none transition-all duration-300">
+        <div class="bg-ink-900 text-white px-4 py-3 rounded-full shadow-xl flex items-center gap-2">
+            <i data-lucide="check" class="w-4 h-4"></i>
+            <span data-toast-text class="text-sm">已完成</span>
+        </div>
+    </div>
+
+    <div id="video-modal" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-black/70" onclick="closeVideoModal()"></div>
+        <div class="relative max-w-5xl mx-auto w-[92vw] mt-10 md:mt-16">
+            <div class="bg-white rounded-3xl overflow-hidden shadow-2xl border border-white/10">
+                <div class="px-6 py-4 bg-paper-50 border-b border-stone-200 flex items-center justify-between gap-4">
+                    <div class="min-w-0">
+                        <p id="video-modal-subtitle" class="text-xs text-gray-500 truncate">本地示范视频</p>
+                        <h3 id="video-modal-title" class="text-lg md:text-xl font-bold text-gray-900 truncate">课程视频</h3>
+                    </div>
+                    <button onclick="closeVideoModal()" class="shrink-0 w-10 h-10 rounded-full bg-white border border-stone-200 hover:bg-gray-50 transition flex items-center justify-center">
+                        <i data-lucide="x" class="w-5 h-5 text-gray-700"></i>
+                    </button>
+                </div>
+                <div class="p-4 md:p-6 bg-black">
+                    <video id="video-modal-player" class="w-full rounded-2xl bg-black" controls playsinline preload="metadata"></video>
+                    <div class="mt-3 flex flex-wrap items-center justify-between gap-3">
+                        <div class="text-xs text-gray-300">提示：视频较大时可稍等缓冲</div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="toggleVideoFullscreen()" class="px-4 py-2 bg-white/10 hover:bg-white/15 text-white rounded-full transition text-sm flex items-center gap-2">
+                                <i data-lucide="maximize-2" class="w-4 h-4"></i>
+                                <span>全屏</span>
+                            </button>
+                            <button onclick="downloadVideo()" class="px-4 py-2 bg-white/10 hover:bg-white/15 text-white rounded-full transition text-sm flex items-center gap-2">
+                                <i data-lucide="download" class="w-4 h-4"></i>
+                                <span>下载</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Scroll to Bottom
+        function scrollToBottom() {
+            document.getElementById('download').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        const WEBAPP_LINK = 'https://libshen.github.io/StormPlan-yswy.github.io/';
+
+        async function copyWebAppLink() {
+            try {
+                await navigator.clipboard.writeText(WEBAPP_LINK);
+                showToast('已复制网页应用链接');
+            } catch (e) {
+                window.prompt('复制下面的链接：', WEBAPP_LINK);
+            }
+        }
+
+        let toastTimer = null;
+        function showToast(message) {
+            const el = document.getElementById('toast');
+            if (!el) return;
+            el.querySelector('[data-toast-text]').textContent = message;
+            el.classList.remove('opacity-0', 'translate-y-3', 'pointer-events-none');
+            el.classList.add('opacity-100', 'translate-y-0');
+            if (toastTimer) window.clearTimeout(toastTimer);
+            toastTimer = window.setTimeout(() => {
+                el.classList.remove('opacity-100', 'translate-y-0');
+                el.classList.add('opacity-0', 'translate-y-3', 'pointer-events-none');
+            }, 2200);
+        }
+
+        let currentVideoSrc = '';
+        let currentVideoObjectUrl = '';
+        let currentVideoAbortController = null;
+
+        async function openVideoModal(grade) {
+            const data = curriculumData[grade];
+            if (!data || !data.featured || !data.featured.video) return;
+            const modal = document.getElementById('video-modal');
+            const titleEl = document.getElementById('video-modal-title');
+            const subtitleEl = document.getElementById('video-modal-subtitle');
+            const video = document.getElementById('video-modal-player');
+
+            titleEl.textContent = data.featured.name ? `《${data.featured.name}》示范视频` : '课程视频';
+            subtitleEl.textContent = data.featured.title || data.title || '本地示范视频';
+
+            currentVideoSrc = data.featured.video;
+            if (data.featured.cover) video.poster = encodeURI(data.featured.cover);
+            video.pause();
+            video.removeAttribute('src');
+            video.load();
+            if (currentVideoObjectUrl) {
+                URL.revokeObjectURL(currentVideoObjectUrl);
+                currentVideoObjectUrl = '';
+            }
+            if (currentVideoAbortController) {
+                currentVideoAbortController.abort();
+                currentVideoAbortController = null;
+            }
+
+            modal.classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+            lucide.createIcons();
+
+            showToast('正在加载视频…');
+
+            const controller = new AbortController();
+            currentVideoAbortController = controller;
+            try {
+                const url = encodeURI(currentVideoSrc);
+                const res = await fetch(url, { signal: controller.signal, cache: 'no-store' });
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const blob = await res.blob();
+                if (controller.signal.aborted) return;
+                currentVideoObjectUrl = URL.createObjectURL(blob);
+                video.src = currentVideoObjectUrl;
+                video.load();
+                showToast('已加载，可播放');
+                const playPromise = video.play();
+                if (playPromise && typeof playPromise.catch === 'function') {
+                    playPromise.catch(() => {});
+                }
+            } catch (e) {
+                if (controller.signal.aborted) return;
+                showToast('视频加载失败：可尝试下载播放');
+                const url = encodeURI(currentVideoSrc);
+                window.open(url, '_blank', 'noreferrer');
+            } finally {
+                if (currentVideoAbortController === controller) {
+                    currentVideoAbortController = null;
+                }
+            }
+        }
+
+        function closeVideoModal() {
+            const modal = document.getElementById('video-modal');
+            const video = document.getElementById('video-modal-player');
+            if (!modal || !video) return;
+            if (currentVideoAbortController) {
+                currentVideoAbortController.abort();
+                currentVideoAbortController = null;
+            }
+            video.pause();
+            video.removeAttribute('src');
+            video.removeAttribute('poster');
+            video.load();
+            if (currentVideoObjectUrl) {
+                URL.revokeObjectURL(currentVideoObjectUrl);
+                currentVideoObjectUrl = '';
+            }
+            modal.classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        function toggleVideoFullscreen() {
+            const video = document.getElementById('video-modal-player');
+            if (!video) return;
+            if (document.fullscreenElement) {
+                document.exitFullscreen?.();
+                return;
+            }
+            video.requestFullscreen?.();
+        }
+
+        function downloadVideo() {
+            if (!currentVideoSrc) return;
+            const a = document.createElement('a');
+            a.href = encodeURI(currentVideoSrc);
+            a.download = '';
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeVideoModal();
+        });
+
+        // Tab Logic
+        const curriculumData = {
+            g1: {
+                title: "一年级 · 启蒙律动",
+                desc: "重点在于培养兴趣，动作简单可爱，诗词朗朗上口。",
+                poems: ["寻隐者不遇", "咏鹅", "静夜思", "春晓"],
+                image: "./Cover/部编版语文一年级下册《寻隐者不遇》.jpg",
+                tag: "形象直观",
+                featured: {
+                    name: "寻隐者不遇",
+                    title: "部编版语文一年级下册 · 诗舞示范",
+                    cover: "./Cover/部编版语文一年级下册《寻隐者不遇》.jpg",
+                    video: "./video/部编版语文一年级下册《寻隐者不遇》.mp4"
+                }
+            },
+            g2: {
+                title: "二年级 · 景情交融",
+                desc: "开始接触描写四季景色的诗歌，舞蹈动作增加舒展性。",
+                poems: ["舟夜书所见", "村居", "咏柳", "登鹳雀楼"],
+                image: "./Cover/部编版语文二年级下册《舟夜书所见》.jpg",
+                tag: "情感表达",
+                featured: {
+                    name: "舟夜书所见",
+                    title: "部编版语文二年级下册 · 诗舞示范",
+                    cover: "./Cover/部编版语文二年级下册《舟夜书所见》.jpg",
+                    video: "./video/部编版语文二年级下册《舟夜书所见》.MP4"
+                }
+            },
+            g3: {
+                title: "三年级 · 意境初探",
+                desc: "诗词难度增加，舞蹈注重对意境的表达和配合。",
+                poems: ["元日", "山行", "绝句", "惠崇春江晚景"],
+                image: "./Cover/部编版语文三年级下册《元日》.jpg",
+                tag: "小组协作",
+                featured: {
+                    name: "元日",
+                    title: "部编版语文三年级下册 · 诗舞示范",
+                    cover: "./Cover/部编版语文三年级下册《元日》.jpg",
+                    video: "./video/部编版语文三年级下册《元日》.mp4"
+                }
+            },
+            g4: {
+                title: "四年级 · 叙事与理",
+                desc: "结合叙事诗，通过舞蹈演绎故事情节。",
+                poems: ["宿新市徐公店", "暮江吟", "题西林壁", "出塞"],
+                image: "./Cover/部编版语文四年级下册《宿新市徐公店》.jpg",
+                tag: "叙事演绎",
+                featured: {
+                    name: "宿新市徐公店",
+                    title: "部编版语文四年级下册 · 诗舞示范",
+                    cover: "./Cover/部编版语文四年级下册《宿新市徐公店》.jpg",
+                    video: "./video/部编版语文四年级下册《宿新市徐公店》.mp4"
+                }
+            },
+            g5: {
+                title: "五年级 · 家国情怀",
+                desc: "选取具有深度的诗词，舞蹈动作更加大气、深沉。",
+                poems: ["稚子弄冰", "示儿", "题临安邸", "己亥杂诗"],
+                image: "./Cover/部编版语文五年级下册《稚子弄冰》.jpg",
+                tag: "情感升华",
+                featured: {
+                    name: "稚子弄冰",
+                    title: "部编版语文五年级下册 · 诗舞示范",
+                    cover: "./Cover/部编版语文五年级下册《稚子弄冰》.jpg",
+                    video: "./video/部编版语文五年级下册《稚子弄冰》.mp4"
+                }
+            },
+            g6: {
+                title: "六年级 · 综合素养",
+                desc: "不仅是舞蹈，更是综合舞台剧式的诗词展现。",
+                poems: ["竹石", "宿建德江", "春夜喜雨", "马诗"],
+                image: "./Cover/部编版语文六年级下册《竹石》.jpg",
+                tag: "艺术综合",
+                featured: {
+                    name: "竹石",
+                    title: "部编版语文六年级下册 · 诗舞示范",
+                    cover: "./Cover/部编版语文六年级下册《竹石》.jpg",
+                    video: "./video/部编版语文六年级下册《竹石》.MP4"
+                }
+            }
+        };
+
+        function switchTab(grade) {
+            // Reset buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-china-red', 'text-white', 'shadow-md');
+                btn.classList.add('bg-white', 'text-gray-600', 'hover:bg-gray-100');
+            });
+
+            // Activate current button
+            const activeBtn = document.getElementById(`btn-${grade}`);
+            activeBtn.classList.remove('bg-white', 'text-gray-600', 'hover:bg-gray-100');
+            activeBtn.classList.add('bg-china-red', 'text-white', 'shadow-md');
+
+            // Update content
+            const data = curriculumData[grade];
+            const contentDiv = document.getElementById('tab-content');
+            
+            // Generate Poem Tags
+            const poemTags = data.poems.map((p, idx) => {
+                const cls = idx === 0
+                    ? 'px-3 py-1 bg-china-red text-white text-sm rounded-md border border-red-700/10'
+                    : 'px-3 py-1 bg-paper-100 text-indigo-ink text-sm rounded-md border border-stone-200';
+                return `<span class="${cls}">《${p}》</span>`;
+            }).join('');
+
+            contentDiv.innerHTML = `
+                <div class="flex-1 space-y-6 animate-fade-in">
+                    <div class="flex items-center gap-3">
+                        <span class="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-xs font-bold tracking-wide">${data.tag}</span>
+                        <h3 class="text-2xl font-bold text-gray-900">${data.title}</h3>
+                    </div>
+                    <p class="text-gray-600 text-lg leading-relaxed">
+                        ${data.desc}
+                    </p>
+                    <div class="rounded-2xl border border-stone-200 bg-paper-50 p-5">
+                        <div class="flex items-start justify-between gap-4">
+                            <div>
+                                <p class="text-xs text-gray-500">本级示范视频</p>
+                                <p class="mt-1 font-bold text-gray-900">${data.featured?.name ? `《${data.featured.name}》` : '课程示范'}</p>
+                                <p class="mt-1 text-sm text-gray-600">${data.featured?.title || '诗舞示范 · 本地资源'}</p>
+                            </div>
+                            <button onclick="openVideoModal('${grade}')" class="shrink-0 px-4 py-2 bg-indigo-ink text-white rounded-full hover:bg-black transition flex items-center gap-2">
+                                <i data-lucide="play" class="w-4 h-4"></i>
+                                <span>播放</span>
+                            </button>
+                        </div>
+                        <div class="mt-4 flex flex-wrap gap-2 text-xs">
+                            <span class="px-2.5 py-1 rounded-full bg-white border border-stone-200 text-gray-600">MP4</span>
+                            <span class="px-2.5 py-1 rounded-full bg-white border border-stone-200 text-gray-600">封面已配置</span>
+                            <span class="px-2.5 py-1 rounded-full bg-white border border-stone-200 text-gray-600">适合课堂导入</span>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="text-sm font-bold text-gray-400 mb-3 uppercase tracking-wider">精选课程案例</p>
+                        <div class="flex flex-wrap gap-2">
+                            ${poemTags}
+                            <span class="px-3 py-1 text-gray-400 text-sm">...及更多</span>
+                        </div>
+                    </div>
+                    <div class="pt-4">
+                        <button onclick="scrollToBottom()" class="text-china-red font-medium hover:text-red-700 flex items-center gap-2 group">
+                            查看该年级完整目录 
+                            <i data-lucide="arrow-right" class="w-4 h-4 transform group-hover:translate-x-1 transition"></i>
+                        </button>
+                    </div>
+                </div>
+                <button onclick="openVideoModal('${grade}')" class="w-full md:w-1/2 h-64 md:h-80 rounded-2xl overflow-hidden shadow-md relative group text-left">
+                    <img src="${encodeURI(data.image)}" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-700" alt="${data.title}">
+                    <div class="absolute inset-0 bg-black/25 group-hover:bg-black/15 transition"></div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="w-16 h-16 rounded-full bg-white/90 backdrop-blur flex items-center justify-center shadow-lg group-hover:scale-105 transition">
+                            <i data-lucide="play" class="w-7 h-7 text-china-red"></i>
+                        </div>
+                    </div>
+                    <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between gap-3">
+                        <div class="min-w-0">
+                            <div class="text-white font-bold truncate">${data.featured?.name ? `《${data.featured.name}》` : '课程示范'}</div>
+                            <div class="text-white/80 text-xs truncate">${data.featured?.title || '点击播放本级示范视频'}</div>
+                        </div>
+                        <div class="bg-white/90 backdrop-blur px-3 py-1 rounded-lg text-xs font-bold shadow-sm shrink-0">
+                            点击播放
+                        </div>
+                    </div>
+                </button>
+            `;
+            
+            // Re-run lucide for injected content (though mostly static icons used here)
+            lucide.createIcons();
+        }
+
+        // Init with Grade 1
+        switchTab('g1');
+
+        // Simple Fade in animation css
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            .animate-fade-in {
+                animation: fadeIn 0.4s ease-out forwards;
+            }
+        `;
+        document.head.appendChild(style);
+
+    </script>
+</body>
+</html>
